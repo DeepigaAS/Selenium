@@ -1,0 +1,10 @@
+objectRepository\mytheresa\MytheresaMyAccountPage.class
+com\lennox\util\ReadExcelFile.class
+objectRepository\mytheresa\MytheresaWishListPage.class
+objectRepository\mytheresa\MytheresaNewArraivalThisWeekPage.class
+variables\mytheresa\UserVariables.class
+com\lennox\util\Compressor.class
+variables\mytheresa\UrlVariables.class
+objectRepository\mytheresa\MytheresaCreateAccountPage.class
+objectRepository\mytheresa\MytheresaAccountInformationPage.class
+objectRepository\mytheresa\MytheresaHomePage.class
