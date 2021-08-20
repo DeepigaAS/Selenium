@@ -1,13 +1,17 @@
 package com.lennox.webpages;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class LoginPage {
    private WebDriver driver;
-
+   private WebDriverWait wait;
    @FindBy(xpath = "//input[@id='j_username']")
    private WebElement usernameTextBox;
 
@@ -17,10 +21,14 @@ public class LoginPage {
    @FindBy(xpath = "//button[@id='loginSubmit']")
    private WebElement loginButton;
 
-   //Constructor
-   public LoginPage (WebDriver driver){
-       this.driver=driver;
+   @FindBy(xpath= "//button[contains(text(),'Welcome')]")
+   private WebElement loginStatus;
 
+
+   //Constructor
+   public LoginPage (WebDriver driver, WebDriverWait wait){
+       this.driver=driver;
+       this.wait = wait;
        //Initialise Elements
        PageFactory.initElements(driver, this);
    }
@@ -31,6 +39,16 @@ public class LoginPage {
 	   passwordTextBox.sendKeys(password);
 	   loginButton.click();
    }
+
+
+public boolean checkLoginStatus() {
+	try {
+	return loginStatus.isDisplayed();
+	}
+	catch(NoSuchElementException e)
+	{
+	return false;}
+}
 
 
 }

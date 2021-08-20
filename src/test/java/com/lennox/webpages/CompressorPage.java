@@ -51,9 +51,12 @@ public class CompressorPage {
 	@FindBy(xpath = "//div[@class='description']/p")
 	private WebElement descriptionText;
 
+private WebDriverWait wait;
+
 	// Constructor
-	public CompressorPage(WebDriver driver) {
+	public CompressorPage(WebDriver driver, WebDriverWait wait) {
 		this.driver = driver;
+		this.wait = wait;
 		// Initialise Elements
 		PageFactory.initElements(driver, this);
 	}
@@ -65,7 +68,6 @@ public class CompressorPage {
 	}
 
 	public Map<String, String> getProductDescription(String catalog) throws InterruptedException {
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
 		Map<String, String> productDescMap = new HashMap<String, String>();
 		String productDescription = driver.findElement(By.xpath("//div/text()[normalize-space()='" + catalog
 				+ "']/parent::div/preceding-sibling::div/h2[@class='title']")).getText();
