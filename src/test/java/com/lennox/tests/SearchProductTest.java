@@ -74,8 +74,6 @@ public class SearchProductTest {
   	   	XSSFRow row = sh.getRow(0);
   	   	int noOfRows = sh.getPhysicalNumberOfRows();
   	   	int noOfCols = row.getLastCellNum();
-  	   	System.out.println(noOfRows);
-  	   	System.out.println(noOfCols);
   	   	Cell cell;
   	   	data = new String[noOfRows-1][noOfCols];
   	   	
@@ -105,9 +103,10 @@ public class SearchProductTest {
 		home.clickOnLoginButton();
 		LoginPage login = new LoginPage(driver);
 		login.login(email, password);
-		
+		testcase.log(Status.INFO, "Login Successful");
 		String navigationMenu[] = pageNavigation.split(":::");
 		home.clickOnPageNavigation(linkName, navigationMenu[0], navigationMenu[1]);
+		testcase.log(Status.INFO, "Navigating to "+linkName+"->"+navigationMenu[0]+"->"+navigationMenu[1]);
 		CompressorPage compressor = new CompressorPage(driver);
 		String description = compressor.getDescription();
 		if(description.equals(pageDescription))
@@ -124,6 +123,8 @@ public class SearchProductTest {
 			List<WebElement> products = compressor.getProductData(catalog);
 			if (products.size() > 0) {
 				productDesc = compressor.getProductDescription(catalog);
+				compressor.scrollIntoProductView(products.get(0));
+				takeScreenshot("ProductView_"+testId+".png");
 				testcase.log(Status.INFO, "Found the product with Catalog#: "+catalog);
 				break;
 			}
@@ -157,13 +158,20 @@ public class SearchProductTest {
   	}
   		catch(Exception e)
   		{
-  			TakesScreenshot screenshot = (TakesScreenshot) driver;
-  			File sourceFile = screenshot.getScreenshotAs(OutputType.FILE);
-  			File destinationFile = new File("error.png");
-  			FileHandler.copy(sourceFile, destinationFile);
-  			testcase.addScreenCaptureFromPath("error.png");
+  			testcase.log(Status.ERROR, e.getMessage());
+  			testcase.log(Status.FAIL, e.getMessage());
+  			takeScreenshot("error_"+testId+".png");
   		}
   	}
+  	public void takeScreenshot(String filename) throws IOException
+  	{
+  		TakesScreenshot screenshot = (TakesScreenshot) driver;
+			File sourceFile = screenshot.getScreenshotAs(OutputType.FILE);
+			File destinationFile = new File(filename);
+			FileHandler.copy(sourceFile, destinationFile);
+			testcase.addScreenCaptureFromPath(filename);
+  	}
+  	
   	@AfterMethod
   	public void burnDown(){
         	driver.quit();

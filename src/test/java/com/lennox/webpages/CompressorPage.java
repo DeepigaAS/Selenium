@@ -139,4 +139,8 @@ public class CompressorPage {
 		JavascriptExecutor jse = (JavascriptExecutor) driver;
 		jse.executeScript("window.scrollTo(0, document.body.scrollHeight)");
 	}
+
+	public void scrollIntoProductView(WebElement webElement) {
+		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", webElement);
+	}
 }
