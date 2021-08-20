@@ -119,8 +119,6 @@ public class SearchProductTest {
 		}
 		
 		List<WebElement> pages = compressor.getPages();
-		int totalPages = pages.size() - 1;
-		int i = 1;
 		Map<String, String> productDesc = null;
 		do {
 			List<WebElement> products = compressor.getProductData(catalog);
